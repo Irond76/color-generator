@@ -6,13 +6,14 @@ import Values from 'values.js'
 function App() {
   const [color, setColor] = useState('');
   const [error, setError] = useState(false);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(new Values('#f15025').all(10));
 
 const handleSubmit = (e) => {
   e.preventDefault();
   try {
     let colors = new Values(color).all(10);
-    console.log(colors);
+    setList(colors);
+    setError(false)
     
   } catch (error) {
     setError(true)
@@ -31,7 +32,10 @@ const handleSubmit = (e) => {
       </form>
     </section>
     <section className="colors">
-      <h4>List Goes Here</h4>
+      {list.map((color, index) => {
+        
+        return <SingleColor key={index} {...color} index={index} hexColor={color.hex} />
+      })}
     </section>
     </>
   )
